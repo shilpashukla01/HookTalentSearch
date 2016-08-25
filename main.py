@@ -4,7 +4,7 @@ import json
 from collections import OrderedDict
 
 # Connect to Github a.k.a. login
-gh = GitHub(token='73f34b63c3a3abc2e9fc85526f5e75590ad10b41')
+gh = GitHub(token='')
  
 # Find all users with location = Ann Arbor and Detroit, language = Python, language = Java, type = user
 # 'location:"Ann Arbor" 
