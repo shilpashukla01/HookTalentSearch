@@ -16,7 +16,7 @@ print len(matchingUsers)
  
 userActivityDict = {}
 # Use githubcontributions api to get top 100 candidates
-for u in matchingUsers[:10]:
+for u in matchingUsers[:5]:
     cmd = 'curl -s https://githubcontributions.io/api/user/'+ u.login
     output = subprocess.check_output(cmd, shell=True)
     userActivityDict[u.login] = json.loads(output)['eventCount']
