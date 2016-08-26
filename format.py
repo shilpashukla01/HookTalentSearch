@@ -11,7 +11,7 @@ def format_html(usr, contributions):
     f.write("<div class='col-md-12'>")
     f.write("<div class='col-md-2'>")
     f.write("<img src='{}' alt='Smiley face' height='150' width='150'>".format(usr.avatar_url))
-    f.write("<h3><a href='{}'>&nbsp&nbspView Profile</h3></a> <br />".format(usr.html_url))
+    f.write("<h3>&nbsp&nbsp<a href='{}'>View Profile</h3></a> <br />".format(usr.html_url))
     f.write("</div>")
     f.write("<div class='col-md-3'>")
     f.write("<b>Name:</b> {}<br />".format(usr.name))
