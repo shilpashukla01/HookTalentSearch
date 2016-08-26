@@ -26,7 +26,7 @@ def send():
             <img src="cid:image1" height="120" width="600">
         </p>
         <p> {} </p>
-    """.format(msgText)
+    """.format(msgText.get_payload())
 
     # Record the MIME types.
     msgHtml = MIMEText(html, 'html')

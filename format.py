@@ -5,7 +5,7 @@ fp = open('template', 'rb')
 
 f.write(fp.read())
 f.write("")
-
+not_specified = "Not Specified"
 
 def format_html(usr, contributions):
     f.write("<div class='col-md-12'>")
@@ -16,8 +16,8 @@ def format_html(usr, contributions):
     f.write("<div class='col-md-3'>")
     f.write("<b>Name:</b> {}<br />".format(usr.name))
     f.write("<b>Login:</b> {}<br />".format(usr.login))
-    f.write("<b>Email Id:</b> {} <br />".format(usr.email))
-    f.write("<b>Company:</b> {}<br />".format(usr.company))
+    f.write("<b>Email Id:</b> {} <br />".format(usr.email if usr.email != None else not_specified))
+    f.write("<b>Company:</b> {}<br />".format(usr.company if usr.company != None else not_specified))
     f.write("<b>City:</b> {}<br />".format(usr.location))
     f.write("<b>GitHub user since:</b> {}<br />".format(usr.created_at.date()))
     f.write("<b>Contributions:</b> {}".format(contributions))
