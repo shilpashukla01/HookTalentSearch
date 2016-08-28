@@ -10,7 +10,7 @@ import redis
 import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()
 
-DESIRED_CANDIDATES_PER_EMAIL_DIGEST = 5
+DEFAULT_DESIRED_CANDIDATES_PER_EMAIL_DIGEST = 5
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -21,9 +21,12 @@ if not logger.handlers:
         logger.addHandler(handler)
 logger.propagate = False
 
-def getGitHubProfiles(locations, languages):
+def getGitHubProfiles(locations, languages, num):
     logger.info("Locations: {0}".format(locations))
     logger.info("Languages: {0}".format(languages))
+
+    num = int(num) if num else DEFAULT_DESIRED_CANDIDATES_PER_EMAIL_DIGEST
+    logger.info("Number of Profiles requested: {0}".format(num))
     
     logger.info("Building query string")
     queryString = ''
@@ -48,7 +51,7 @@ def getGitHubProfiles(locations, languages):
      
     userActivityDict = {}
     
-    logger.info("Use githubcontributions api to get the number of contributions for each user")
+    logger.info("Using githubcontributions api to get the number of contributions for each user")
     
     # TODO: Remove the top 25 when ready
     for u in matchingUsers[:25]:
@@ -58,14 +61,16 @@ def getGitHubProfiles(locations, languages):
     
     topUsers = sorted(userActivityDict.items(), key=lambda x: x[1], reverse= True)
 
-    logger.info("Emailing top 5 profiles not already in the cache (not already sent before)")
+    logger.info("Emailing top {} profiles not already in the cache (not already sent before)".format(num))
     r = redis.StrictRedis(host='localhost', port=6379, db=0)
-    
-    # Run the following when done debugging, to clear the chache
+
+    format.initialize(num)
+
+    # TODO Run the following when done debugging, to clear the cache
     # redis-cli flushall
     count = 0
     for u in topUsers:
-        if count < DESIRED_CANDIDATES_PER_EMAIL_DIGEST:
+        if count < num:
             usr = gh.user(u[0])
             contributions = u[1]
             if not r.exists(usr.login):
@@ -81,6 +86,7 @@ if __name__ == '__main__':
     parser = ArgumentParser("Hook Talent Search")
     parser.add_argument("-lang", "--languages", required=True)
     parser.add_argument("-loc", "--locations", required=True)
+    parser.add_argument("-num", "--numberOfProfiles", required=False)
     options = parser.parse_args()
     
-    getGitHubProfiles( options.locations.split(','), options.languages.split(','))
+    getGitHubProfiles( options.locations.split(','), options.languages.split(','), options.numberOfProfiles)

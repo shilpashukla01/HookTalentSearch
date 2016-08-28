@@ -2,15 +2,18 @@ from github3 import GitHub
 
 f = open('file.html', 'w')
 fp = open('template', 'rb')
-
-f.write(fp.read())
-f.write("")
 not_specified = "Not Specified"
+
+def initialize(count):
+    f.write(fp.read())
+    f.write("")
+    f.write("<h2>&nbspTop {} Matching GitHub Profiles</h2><br />".format(count))
+
 
 def format_html(usr, contributions):
     f.write("<div class='col-md-12'>")
     f.write("<div class='col-md-2'>")
-    f.write("<img src='{}' alt='Smiley face' height='150' width='150'>".format(usr.avatar_url))
+    f.write("<img src='{}' alt='defaultIcon.png' height='150' width='150'>".format(usr.avatar_url))
     f.write("<h3>&nbsp&nbsp<a href='{}'>View Profile</h3></a> <br />".format(usr.html_url))
     f.write("</div>")
     f.write("<div class='col-md-3'>")
