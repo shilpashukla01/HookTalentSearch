@@ -58,7 +58,9 @@ def getGitHubProfiles(locations, languages, num):
         cmd = 'curl -s https://githubcontributions.io/api/user/'+ u.login
         output = subprocess.check_output(cmd, shell=True)
         userActivityDict[u.login] = json.loads(output)['eventCount']
-    
+
+    logger.info("Sorting the profiles based on # of contributions")
+
     topUsers = sorted(userActivityDict.items(), key=lambda x: x[1], reverse= True)
 
     logger.info("Emailing top {} profiles not already in the cache (not already sent before)".format(num))
