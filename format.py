@@ -23,7 +23,7 @@ def generate_linkedin_query(name, location):
     return query
 
 
-def format_html(usr, contributions):
+def format_html(usr, contributions, stackoverflow_url):
 
     if usr.company == None or 'Hooklogic' not in usr.company and 'HookLogic' not in usr.company:
         f.write("<div class='col-md-12'>")
@@ -34,7 +34,9 @@ def format_html(usr, contributions):
 
         if query:
             f.write("<h5>&nbsp&nbsp&nbsp<a href='{}'>LinkedIn Profile</h5></a>".format(query))
-
+        
+        if stackoverflow_url != '':
+            f.write("<h5>&nbsp&nbsp&nbsp<a href='{}'>Stackoverflow Profile</h5></a>".format(stackoverflow_url))
         f.write("<br /><br /></div>")
         f.write("<div class='col-md-3'>")
         f.write("<b>Name:</b> {}<br />".format(usr.name))

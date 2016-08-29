@@ -75,8 +75,16 @@ def getGitHubProfiles(locations, languages, num):
         if count < num:
             usr = gh.user(u[0])
             contributions = u[1]
+            logger.info(usr.login)
             if not r.exists(usr.login):
-                format.format_html(usr, contributions)
+                # Query StackExchange for User id
+                cmd = 'curl http://data.stackexchange.com/stackoverflow/csv/670133?Name=' + usr.login
+                output = subprocess.check_output(cmd, shell=True)
+                user_id = ''
+                user_id = output.split('\n')[1].strip('\"')
+                print user_id
+                stackoverflow_url = "http://stackoverflow.com/users/"+ user_id + "/" +usr.login
+                format.format_html(usr, contributions, stackoverflow_url if user_id else '')
                 r.set(usr.login, True)
                 count = count + 1
     
