@@ -6,14 +6,15 @@ from email.mime.image import MIMEImage
 def send():
 
     sender = 'hooktalentsearch@gmail.com'
-    recepients = 'arati.mahimane@hooklogic.com, shilpa.shukla@hooklogic.com'
+    recepient1 = 'arati.mahimane@hooklogic.com'
+    recepient2 = 'shilpa.shukla@hooklogic.com'
     textfile = 'file.html'
 
     # Create message container.
     msgRoot = MIMEMultipart()
     msgRoot['Subject'] = 'HookTalentSearch: Matching Profiles'
     msgRoot['From'] = sender
-    msgRoot['To'] = recepients
+    msgRoot['To'] = recepient1 + ',' + recepient2
 
     fp = open(textfile, 'rb')
     msgText = MIMEText(fp.read())
@@ -43,7 +44,8 @@ def send():
 
     # TODO store credentials somewhere
     s.login('hooktalentsearch', '')
-    s.sendmail(sender, [recepients], msgRoot.as_string())
+    s.sendmail(sender, [recepient1], msgRoot.as_string())
+    s.sendmail(sender, [recepient2], msgRoot.as_string())
     s.quit()
 
 if __name__ == "__main__":

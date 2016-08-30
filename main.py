@@ -55,6 +55,7 @@ def getGitHubProfiles(locations, languages, num):
     
     # TODO: Remove the top 25 when ready
     for u in matchingUsers[:25]:
+        
         cmd = 'curl -s https://githubcontributions.io/api/user/'+ u.login
         output = subprocess.check_output(cmd, shell=True)
         userActivityDict[u.login] = json.loads(output)['eventCount']
@@ -75,13 +76,14 @@ def getGitHubProfiles(locations, languages, num):
         if count < num:
             usr = gh.user(u[0])
             contributions = u[1]
-
-            if not r.exists(usr.login):
+            
+            if not r.exists(usr.login) and (usr.company == None or 'HookLogic' not in usr.company or 'Hooklogic' not in usr.company):
+                
                 # Query StackExchange for User id
                 cmd = 'curl -s http://data.stackexchange.com/stackoverflow/csv/670133?Name=' + usr.login
                 output = subprocess.check_output(cmd, shell=True)
                 user_id = ''
-                user_id = output.split('\n')[1].strip('\"')
+                user_id = output.split('\n')[1].replace('\"', '')
                 stackoverflow_url = "http://stackoverflow.com/users/"+ user_id + "/" +usr.login
                 format.format_html(usr, contributions, stackoverflow_url if user_id else '')
                 r.set(usr.login, True)

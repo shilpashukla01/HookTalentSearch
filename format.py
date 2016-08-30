@@ -25,28 +25,27 @@ def generate_linkedin_query(name, location):
 
 def format_html(usr, contributions, stackoverflow_url):
 
-    if usr.company == None or 'Hooklogic' not in usr.company and 'HookLogic' not in usr.company:
-        f.write("<div class='col-md-12'>")
-        f.write("<div class='col-md-2'>")
-        f.write("<img src='{}' alt='defaultIcon.png' height='150' width='150'>".format(usr.avatar_url))
-        f.write("<h5>&nbsp&nbsp&nbsp<a href='{}'>GitHub Profile</h5></a>".format(usr.html_url))
-        query = generate_linkedin_query(usr.name, usr.location)
+    f.write("<div class='col-md-12'>")
+    f.write("<div class='col-md-2'>")
+    f.write("<img src='{}' alt='defaultIcon.png' height='150' width='150'>".format(usr.avatar_url))
+    f.write("<h5>&nbsp&nbsp&nbsp<a href='{}'>GitHub Profile</h5></a>".format(usr.html_url))
+    query = generate_linkedin_query(usr.name, usr.location)
 
-        if query:
-            f.write("<h5>&nbsp&nbsp&nbsp<a href='{}'>LinkedIn Profile</h5></a>".format(query))
-        
-        if stackoverflow_url != '':
-            f.write("<h5>&nbsp&nbsp&nbsp<a href='{}'>Stackoverflow Profile</h5></a>".format(stackoverflow_url))
-        f.write("<br /><br /></div>")
-        f.write("<div class='col-md-3'>")
-        f.write("<b>Name:</b> {}<br />".format(usr.name))
-        f.write("<b>Login:</b> {}<br />".format(usr.login))
-        f.write("<b>Email Id:</b> {} <br />".format(usr.email if usr.email != None else not_specified))
-        f.write("<b>Company:</b> {}<br />".format(usr.company if usr.company != None else not_specified))
-        f.write("<b>City:</b> {}<br />".format(usr.location))
-        f.write("<b>GitHub user since:</b> {}<br />".format(usr.created_at.date()))
-        f.write("<b>GitHub contributions:</b> {}".format(contributions))
-        f.write("</div></div></div>")
+    if query:
+        f.write("<h5>&nbsp&nbsp&nbsp<a href='{}'>LinkedIn Profile</h5></a>".format(query))
+    
+    if stackoverflow_url != '':
+        f.write("<h5>&nbsp&nbsp&nbsp<a href='{}'>Stackoverflow Profile</h5></a>".format(stackoverflow_url))
+    f.write("<br /><br /></div>")
+    f.write("<div class='col-md-3'>")
+    f.write("<b>Name:</b> {}<br />".format(usr.name))
+    f.write("<b>Login:</b> {}<br />".format(usr.login))
+    f.write("<b>Email Id:</b> {} <br />".format(usr.email if usr.email != None else not_specified))
+    f.write("<b>Company:</b> {}<br />".format(usr.company if usr.company != None else not_specified))
+    f.write("<b>City:</b> {}<br />".format(usr.location))
+    f.write("<b>GitHub user since:</b> {}<br />".format(usr.created_at.date()))
+    f.write("<b>GitHub contributions:</b> {}".format(contributions))
+    f.write("</div></div></div>")
 
 
 def save_file():
